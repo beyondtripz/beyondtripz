@@ -46,12 +46,12 @@ button { cursor: pointer; }
 .eyebrow::before { content: ""; width: 28px; height: 2px; background: var(--amber); }
 h1, h2, h3, h4 { margin: 0 0 16px; font-family: Georgia, "Times New Roman", serif; line-height: 1.12; letter-spacing: -.025em; }
 h1 { font-size: clamp(2.75rem, 7vw, 5.8rem); }
-h2 { font-size: clamp(2rem, 4vw, 3.45rem); }
+h2 { font-size: clamp(2rem, 4vw, 3.15rem); }
 h3 { font-size: 1.35rem; }
 p { margin: 0 0 18px; }
 .lead { color: var(--ink-soft); font-size: clamp(1.05rem, 2vw, 1.22rem); line-height: 1.75; }
 .muted { color: var(--ink-soft); }
-.section { padding: 96px 0; }
+.section { padding: 84px 0; }
 .section-sm { padding: 68px 0; }
 .section-head { max-width: 720px; margin-bottom: 48px; }
 .section-head.center { margin-inline: auto; text-align: center; }
@@ -85,21 +85,63 @@ p { margin: 0 0 18px; }
 .btn-light:hover { background: var(--sand); color: var(--navy); }
 .text-link { display: inline-flex; align-items: center; gap: 8px; color: var(--teal-dark); font-weight: 800; }
 .button-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
-.hero .button-row { gap: 16px; margin-top: 34px; margin-bottom: 36px; }
+.hero .button-row { gap: 16px; margin-top: 34px; margin-bottom: 0; }
 
-.hero { position: relative; min-height: 760px; display: grid; align-items: center; overflow: hidden; padding: 140px 0 85px; background: linear-gradient(105deg, rgba(251,250,247,.98) 0%, rgba(251,250,247,.92) 48%, rgba(251,250,247,.12) 72%), url("../../images/banner.jpg") center/cover; }
-.hero::after { content: ""; position: absolute; inset: auto -80px -160px auto; width: 360px; height: 360px; border: 80px solid rgba(12,143,136,.1); border-radius: 50%; }
-.hero-content { position: relative; z-index: 2; max-width: 730px; }
-.hero h1 { max-width: 700px; color: var(--navy-deep); }
-.hero h1 em { color: var(--teal); font-style: normal; }
-.hero .lead { max-width: 610px; }
-.trust-strip { position: absolute; z-index: 3; left: 0; right: 0; bottom: 0; background: rgba(6,30,52,.94); color: #fff; }
-.trust-grid { display: grid; grid-template-columns: repeat(3, 1fr); }
-.trust-item { display: flex; gap: 14px; align-items: center; padding: 22px 28px; border-right: 1px solid rgba(255,255,255,.13); }
-.trust-item:last-child { border-right: 0; }
-.trust-item i { color: #68d4cb; font-size: 1.15rem; }
-.trust-item strong { display: block; font-size: .92rem; }
-.trust-item small { color: rgba(255,255,255,.65); }
+.hero {
+  position: relative;
+  min-height: 100svh;
+  display: grid;
+  align-items: center;
+  overflow: hidden;
+  padding: 138px 0 112px;
+  isolation: isolate;
+  perspective: 1600px;
+  background: #10263b url("../../images/doorway-journey-v2.jpg") center 58%/cover no-repeat;
+}
+.hero-shade { position: absolute; z-index: -1; inset: 0; background: linear-gradient(90deg, rgba(4,17,28,.72) 0%, rgba(4,17,28,.2) 35%, transparent 58%), linear-gradient(180deg, rgba(4,17,28,.5), transparent 32%, rgba(4,17,28,.58)); }
+.hero-stage { min-height: calc(100svh - 250px); display: flex; align-items: flex-end; justify-content: flex-start; text-align: left; }
+.hero-content { position: relative; z-index: 2; max-width: 470px; padding: 28px 30px; border-left: 2px solid rgba(255,209,116,.9); border-radius: 0 18px 18px 0; background: linear-gradient(90deg, rgba(4,17,28,.58), rgba(4,17,28,.14)); backdrop-filter: blur(5px); opacity: 0; transform: translateY(18px); animation: hero-reveal .9s 1.55s ease forwards; }
+.hero-kicker { display: inline-flex; margin: 0 0 12px; color: #ffd174; font-size: .68rem; font-weight: 800; letter-spacing: .15em; text-transform: uppercase; }
+.hero h1 { max-width: 450px; color: #fff; font-size: clamp(3rem, 5vw, 5.1rem); line-height: .98; text-wrap: balance; text-shadow: 0 4px 22px rgba(0,0,0,.42); }
+.hero .lead { max-width: 420px; color: rgba(255,255,255,.88); font-size: 1.03rem; line-height: 1.55; text-shadow: 0 2px 18px rgba(0,0,0,.5); }
+.btn-amber { background: #f3aa3c; color: #10263b; }
+.btn-amber:hover { background: #ffd174; color: #10263b; box-shadow: 0 14px 30px rgba(243,170,60,.3); }
+.btn-glass { border-color: rgba(255,255,255,.46); background: rgba(4,17,28,.22); color: #fff; backdrop-filter: blur(8px); }
+.btn-glass:hover { border-color: #fff; background: #fff; color: var(--navy); box-shadow: none; }
+
+.door-curtain { position: absolute; z-index: 5; inset: 0; display: flex; pointer-events: none; }
+.door-panel { position: relative; width: 50.2%; height: 100%; overflow: hidden; border: 1px solid rgba(255,224,184,.24); background-color: rgba(104,57,29,.13); background-image: linear-gradient(110deg, rgba(255,236,207,.12), transparent 32%, rgba(62,29,13,.1) 68%, rgba(255,221,173,.08)), repeating-linear-gradient(90deg, transparent 0 13.8%, rgba(74,38,19,.16) 14%, rgba(255,233,199,.08) 14.3%, transparent 14.7% 28%); box-shadow: inset 0 0 0 10px rgba(82,43,22,.58), inset 0 0 0 12px rgba(255,224,181,.16), inset 0 0 55px rgba(24,10,4,.18), 0 0 40px rgba(0,0,0,.12); backdrop-filter: blur(1.5px) brightness(.84) saturate(.9); -webkit-backdrop-filter: blur(1.5px) brightness(.84) saturate(.9); }
+.door-panel::before { content: ""; position: absolute; inset: 5%; border: 2px solid rgba(80,41,20,.38); box-shadow: inset 0 1px 0 rgba(255,231,198,.25), 0 0 0 1px rgba(255,255,255,.04); }
+.door-panel::after { content: ""; position: absolute; top: 0; bottom: 0; width: 16px; background: linear-gradient(90deg, rgba(46,21,9,.38), rgba(255,220,171,.16), rgba(35,15,6,.22)); }
+.door-panel-left::after { right: 0; }
+.door-panel-right::after { left: 0; }
+.door-panel-left { transform-origin: left center; animation: open-left 1.65s .2s cubic-bezier(.72,.01,.27,1) forwards; }
+.door-panel-right { transform-origin: right center; animation: open-right 1.65s .2s cubic-bezier(.72,.01,.27,1) forwards; }
+.door-handle { position: absolute; z-index: 2; top: 50%; width: 62px; height: 8px; border-radius: 99px; background: linear-gradient(#e2b765, #9b6726); box-shadow: 0 3px 7px rgba(0,0,0,.42), inset 0 1px rgba(255,255,255,.5); }
+.door-handle::before { content: ""; position: absolute; top: 50%; width: 24px; height: 24px; border-radius: 50%; background: linear-gradient(135deg,#edc778,#9a6527); transform: translateY(-50%); box-shadow: 0 2px 6px rgba(0,0,0,.35); }
+.door-panel-left .door-handle { right: 6%; }
+.door-panel-left .door-handle::before { right: -2px; }
+.door-panel-right .door-handle { left: 6%; }
+.door-panel-right .door-handle::before { left: -2px; }
+.scroll-cue { position: absolute; z-index: 4; left: 50%; bottom: 26px; display: grid; justify-items: center; gap: 7px; transform: translateX(-50%); color: #fff; font-size: .68rem; font-weight: 800; letter-spacing: .15em; text-transform: uppercase; text-shadow: 0 2px 12px rgba(0,0,0,.7); opacity: 0; animation: scroll-appear .5s 2s ease forwards; }
+.scroll-cue i { font-size: 1.05rem; animation: scroll-blink 1.35s 2.2s ease-in-out infinite; }
+
+@keyframes open-left { to { transform: translateX(-102%) rotateY(-12deg); } }
+@keyframes open-right { to { transform: translateX(102%) rotateY(12deg); } }
+@keyframes hero-reveal { to { opacity: 1; transform: translateY(0); } }
+@keyframes scroll-appear { to { opacity: 1; } }
+@keyframes scroll-blink { 0%,100% { opacity: .25; transform: translateY(0); } 50% { opacity: 1; transform: translateY(7px); } }
+
+.home-page .site-header:not(.scrolled) .brand-name, .home-page .site-header:not(.scrolled) .nav-links a { color: #fff; }
+.home-page .site-header:not(.scrolled) .brand-mark { background: rgba(255,255,255,.16); backdrop-filter: blur(8px); }
+.home-page .site-header:not(.scrolled) .brand-name span { color: #ffd174; }
+.home-page .site-header:not(.scrolled) .nav-links a:not(.btn)::after { background: #ffd174; }
+.home-page .site-header:not(.scrolled) .nav-links .btn { border-color: rgba(255,255,255,.4); background: rgba(4,17,28,.22); backdrop-filter: blur(8px); }
+.inner-page .site-header:not(.scrolled) .brand-name, .inner-page .site-header:not(.scrolled) .nav-links a { color: #fff; }
+.inner-page .site-header:not(.scrolled) .brand-name span { color: #ffd174; }
+.inner-page .site-header:not(.scrolled) .brand-mark { background: rgba(255,255,255,.16); backdrop-filter: blur(8px); }
+.inner-page .site-header:not(.scrolled) .nav-links a:not(.btn)::after { background: #ffd174; }
+.inner-page .site-header:not(.scrolled) .nav-links .btn, .inner-page .site-header:not(.scrolled) > .container > .btn { border-color: rgba(255,255,255,.42); background: rgba(4,17,28,.24); color: #fff; backdrop-filter: blur(8px); }
 
 .intro-grid, .split { display: grid; grid-template-columns: .9fr 1.1fr; gap: 72px; align-items: center; }
 .intro-card { padding: 38px; border: 1px solid var(--line); border-radius: var(--radius); background: #fff; box-shadow: var(--shadow); }
@@ -119,7 +161,7 @@ p { margin: 0 0 18px; }
 .service-card .text-link { position: absolute; left: 30px; bottom: 26px; }
 .service-card.featured .text-link { color: #79ddd4; }
 
-.visual-card { position: relative; min-height: 520px; overflow: hidden; border-radius: 28px; background: url("../../images/pic01.jpg") center/cover; box-shadow: var(--shadow); }
+.visual-card { position: relative; min-height: 520px; overflow: hidden; border-radius: 28px; background: url("../../images/licensed-passport.jpg") center/cover; box-shadow: var(--shadow); }
 .visual-card::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(6,30,52,.78), transparent 55%); }
 .visual-caption { position: absolute; z-index: 2; left: 32px; right: 32px; bottom: 28px; color: #fff; }
 .visual-caption p { margin: 0; color: rgba(255,255,255,.75); }
@@ -130,9 +172,11 @@ p { margin: 0 0 18px; }
 .process .eyebrow { color: #78d8d0; }
 .process .lead { color: rgba(255,255,255,.68); }
 .steps { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; counter-reset: step; }
+.steps-four { grid-template-columns: repeat(4, 1fr); }
 .step { position: relative; padding: 26px 18px; border-left: 1px solid rgba(255,255,255,.16); counter-increment: step; }
 .step::before { content: "0" counter(step); display: block; margin-bottom: 26px; color: #78d8d0; font-size: .78rem; font-weight: 800; letter-spacing: .12em; }
-.step p { color: rgba(255,255,255,.62); font-size: .9rem; }
+.step p { color: var(--ink-soft); font-size: .9rem; }
+.process .step p { color: rgba(255,255,255,.62); }
 
 .why-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
 .reason { padding: 28px; border-top: 1px solid var(--line); }
@@ -154,9 +198,21 @@ p { margin: 0 0 18px; }
 .cta-grid { display: flex; align-items: center; justify-content: space-between; gap: 40px; }
 .cta-grid p { margin: 0; color: rgba(255,255,255,.75); }
 
-.page-hero { padding: 170px 0 78px; background: var(--sand); }
-.page-hero h1 { max-width: 900px; font-size: clamp(2.6rem, 6vw, 4.8rem); }
-.page-hero p { max-width: 720px; }
+.page-hero { position: relative; min-height: 520px; display: grid; align-items: end; padding: 170px 0 72px; overflow: hidden; isolation: isolate; background: var(--navy); color: #fff; }
+.page-hero::before { content: ""; position: absolute; z-index: -2; inset: 0; background-position: center; background-size: cover; transform: scale(1.02); }
+.page-hero::after { content: ""; position: absolute; z-index: -1; inset: 0; background: linear-gradient(90deg, rgba(4,17,28,.82), rgba(4,17,28,.2) 65%), linear-gradient(0deg, rgba(4,17,28,.5), transparent 55%); }
+.page-hero .container { position: relative; }
+.page-hero h1 { max-width: 720px; font-size: clamp(2.8rem, 6vw, 5.2rem); text-wrap: balance; }
+.page-hero p { max-width: 560px; }
+.page-hero .lead { color: rgba(255,255,255,.8); }
+.page-hero .eyebrow { color: #ffd174; }
+.about-page .page-hero::before { background-image: url("../../images/licensed-travel-planning.jpg"); background-position: center 48%; }
+.services-page .page-hero::before { background-image: url("../../images/licensed-tour-hotel.jpg"); background-position: center 54%; }
+.visas-page .page-hero::before { background-image: url("../../images/licensed-passport.jpg"); background-position: center 57%; }
+.faq-page .page-hero::before { background-image: url("../../images/licensed-flight.jpg"); background-position: center 43%; }
+.contact-page .page-hero::before { background-image: url("../../images/licensed-travel-planning.jpg"); background-position: center 50%; }
+.legal-page .page-hero { min-height: 430px; }
+.legal-page .page-hero::before { background-image: url("../../images/licensed-passport.jpg"); background-position: center 58%; }
 .content-grid { display: grid; grid-template-columns: 280px 1fr; gap: 70px; align-items: start; }
 .side-nav { position: sticky; top: 110px; padding: 24px; border: 1px solid var(--line); border-radius: 18px; background: #fff; }
 .side-nav a { display: block; padding: 10px 0; color: var(--ink-soft); font-size: .9rem; font-weight: 700; border-bottom: 1px solid var(--line); }
@@ -178,6 +234,8 @@ textarea { min-height: 130px; resize: vertical; }
 .contact-options { display: grid; gap: 14px; }
 .contact-option { padding: 24px; border: 1px solid var(--line); border-radius: 16px; background: #fff; }
 .contact-option i { margin-right: 10px; color: var(--teal); }
+.contact-option p { margin: 6px 0 0; color: var(--ink-soft); font-size: .9rem; }
+.form-note { margin: 12px 0 0; font-size: .8rem; }
 
 .site-footer { padding: 72px 0 28px; background: var(--navy-deep); color: #fff; }
 .footer-grid { display: grid; grid-template-columns: 1.4fr repeat(3, 1fr); gap: 48px; }
@@ -200,19 +258,28 @@ textarea { min-height: 130px; resize: vertical; }
   .card-grid { grid-template-columns: 1fr 1fr; }
   .service-card.featured { grid-column: span 2; }
   .steps { grid-template-columns: 1fr 1fr; }
+  .steps-four { grid-template-columns: 1fr 1fr; }
   .content-grid { grid-template-columns: 1fr; }
   .side-nav { position: static; display: flex; gap: 14px; overflow-x: auto; white-space: nowrap; }
   .side-nav a { border: 0; }
   .footer-grid { grid-template-columns: 1fr 1fr; }
+  .home-page .site-header:not(.scrolled) .nav-links a { color: var(--ink); }
+  .home-page .site-header:not(.scrolled) .nav-links .btn { color: #fff; background: var(--teal); }
+  .inner-page .site-header:not(.scrolled) .nav-links a { color: var(--ink); }
+  .inner-page .site-header:not(.scrolled) .nav-links .btn { color: #fff; background: var(--teal); }
 }
 
 @media (max-width: 680px) {
   .container, .narrow { width: min(100% - 28px, 1160px); }
   .section { padding: 72px 0; }
-  .hero { min-height: 760px; padding-top: 120px; background: linear-gradient(rgba(251,250,247,.92), rgba(251,250,247,.96)), url("../../images/banner.jpg") center/cover; }
-  .hero h1 { font-size: clamp(2.7rem, 14vw, 4rem); }
-  .hero .button-row { display: grid; grid-template-columns: 1fr; gap: 14px; max-width: 330px; margin-bottom: 40px; }
-  .trust-strip { position: static; margin-top: 50px; }
+  .hero { min-height: 100svh; padding: 110px 0 88px; background-position: 50% 55%; }
+  .hero-stage { min-height: calc(100svh - 220px); align-items: flex-end; }
+  .hero-content { max-width: 330px; padding: 20px 22px; }
+  .hero h1 { font-size: clamp(2.75rem, 13vw, 4rem); }
+  .hero-kicker { font-size: .6rem; letter-spacing: .1em; }
+  .hero .lead { max-width: 34rem; font-size: 1rem; line-height: 1.6; }
+  .hero .button-row { display: grid; grid-template-columns: 1fr; gap: 12px; width: min(100%, 320px); margin: 28px auto 0; }
+  .scroll-cue span { display: none; }
   .trust-grid, .card-grid, .steps, .why-grid, .footer-grid, .form-grid, .bullet-grid { grid-template-columns: 1fr; }
   .trust-item { border-right: 0; border-bottom: 1px solid rgba(255,255,255,.12); }
   .service-card.featured { grid-column: auto; }
@@ -220,10 +287,12 @@ textarea { min-height: 130px; resize: vertical; }
   .testimonial { padding: 38px 24px; }
   .testimonial blockquote { font-size: 1.3rem; }
   .cta-grid, .footer-bottom { align-items: flex-start; flex-direction: column; }
-  .page-hero { padding-top: 140px; }
+  .page-hero { min-height: 460px; padding: 140px 0 52px; }
   .form-card { padding: 24px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; }
+  .door-curtain { display: none; }
+  .hero-content, .scroll-cue { opacity: 1; transform: none; animation: none; }
 }
